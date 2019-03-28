@@ -12,7 +12,7 @@ function displayDestinationInfo() {
         method: "GET"
     }).then(function(response) {
         var results = response.data;
-        // console.log(results);
+        console.log(results);
 
         results.forEach(function(result) {
             // Creating a div to hold the destination
@@ -21,16 +21,20 @@ function displayDestinationInfo() {
             // Storing the rating image of gif
             var rating = result.rating;
             
+            // Creating a paragraph tag with the result item's rating
             var p = $("<p>").text("Rating: " + rating);
-            console.log(p);
 
-            // Storing the static gif URL
+            // Creating an image tag
             var staticIMG = $("<img>");
-            staticIMG.attr("src", result.images.fixed_height.url);
 
-            destDiv.prepend(p);
-            destDiv.prepend(staticIMG)
+            // Giving the image tag a src attribute of a property pulled off the result item
+            staticIMG.attr("src", result.images.fixed_height_still.url);
 
+            // Appending the paragraph and staticIMG we created to the "destDiv" div we created
+            destDiv.append(p);
+            destDiv.append(staticIMG)
+
+            // Prepending the destDiv to the "#destinations" div in the HTML
             $("#destinations").prepend(destDiv);
 
         })

@@ -31,8 +31,8 @@ function displayDestinationInfo() {
             staticIMG.attr("src", result.images.fixed_height_still.url);
 
             // Appending the paragraph and staticIMG we created to the "destDiv" div we created
-            destDiv.append(p);
             destDiv.append(staticIMG)
+            destDiv.append(p);
 
             // Prepending the destDiv to the "#destinations" div in the HTML
             $("#destinations").prepend(destDiv);

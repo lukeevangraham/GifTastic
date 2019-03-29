@@ -4,7 +4,7 @@ var destinations = ["Eiffel Tower", "Big Ben", "Vatican", "Charles Bridge", "Mac
 // displayDestinationInfo function re-renders the HTML to diplay the appropriate content
 function displayDestinationInfo() {
     var destination = $(this).attr("data-name");
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + destination + "&api_key=6NPx7xPqPCxdQFVMsaIiTbtvP0EpnX8k&limit=10";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + destination + "&api_key=6NPx7xPqPCxdQFVMsaIiTbtvP0EpnX8k&limit=10";
 
     // Creating an AJAX call for the specific destination button being clicked
     $.ajax({

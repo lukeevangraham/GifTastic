@@ -3,8 +3,8 @@ var destinations = ["Eiffel Tower", "Big Ben", "Vatican", "Charles Bridge", "Mac
 
 // displayDestinationInfo function re-renders the HTML to diplay the appropriate content
 function displayDestinationInfo() {
-    var destination = $(this).attr("data-name");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + destination + "&api_key=6NPx7xPqPCxdQFVMsaIiTbtvP0EpnX8k&limit=10";
+    var chosenDestination = $(this).attr("data-name");
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + chosenDestination + "&api_key=6NPx7xPqPCxdQFVMsaIiTbtvP0EpnX8k&limit=10";
 
     // Creating an AJAX call for the specific destination button being clicked
     $.ajax({
@@ -12,7 +12,6 @@ function displayDestinationInfo() {
         method: "GET"
     }).then(function(response) {
         var results = response.data;
-        // console.log(results);
 
         results.forEach(function(result) {
             // Creating a div to hold the destination
@@ -44,7 +43,6 @@ function displayDestinationInfo() {
             $("#destinations").prepend(destDiv);
         })
 
-        // var destinationDiv = $("<div class='destination>");
     });
 }
 
@@ -71,9 +69,7 @@ function renderButtons() {
         button.text(destination);
         // Adding the button to the destination-button div
         $('#destination-buttons').append(button)
-    });
-    // console.log(destinations);
-
+    })
 }
 
 // Function to switch gif state between animated and still
@@ -96,10 +92,9 @@ function switchGifState() {
 
 // Function to add destination into array and create button
 function addDestination() {
-    var destination = $("#destination-input").val();
-    destinations.push(destination);
+    var newDestination = $("#destination-input").val();
+    destinations.push(newDestination);
     renderButtons();
-    console.log(destinations);
 }
 
 // // Grab the text from the input box
@@ -120,4 +115,4 @@ $(document).on("click", "#addDestination", addDestination);
 
 
 // Calling the renderButtons fuction to display the inistial list of movies
-renderButtons()
+renderButtons();

@@ -62,7 +62,7 @@ function renderButtons() {
         // Create a beginning and ending button tag
         var button = $('<button>');
         // Adding a class of dest-btn to our button
-        button.addClass("dest-btn");
+        button.addClass("dest-btn btn btn-dark m-1");
         // Adding a data-attribute
         button.attr("data-name", destination);
         // Providing the initial button text
@@ -87,11 +87,11 @@ function switchGifState() {
 
 // // This .on("click") function will trigger the AJAX Call
 // $("addDestination").on("click", function(event) {
-// event.preventDefault();
-
-
-// Function to add destination into array and create button
-function addDestination() {
+    
+    
+    // Function to add destination into array and create button
+    function addDestination() {
+    event.preventDefault();
     var newDestination = $("#destination-input").val();
     destinations.push(newDestination);
     renderButtons();

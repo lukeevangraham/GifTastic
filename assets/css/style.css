@@ -1,11 +1,35 @@
-body {
-    background-image: url(../images/circuit.png);
-}
+/* body {
+    background-image: url(../images/bg.jpg);
+} */
+
+body { 
+    background: url(../images/bg.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
 
 #title {
-    background-color: gray;
+    background-color: rgba(100, 100, 100, .4);
 }
 
 label {
     background-color: white;
+}
+
+#title {
+    font-family: 'Comfortaa', cursive;
+}
+
+#destinations {
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.destination {
+    color: white;
+}
+
+#destination-buttons {
+    background-color: rgba(0, 0, 0, .6)
 }

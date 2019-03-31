@@ -15,7 +15,7 @@ function displayDestinationInfo() {
 
         results.forEach(function(result) {
             // Creating a div to hold the destination
-            var destDiv = $("<div class='destination'>");
+            var destDiv = $("<div class='destination p-3'>");
 
             // Storing the rating image of gif
             var rating = result.rating;
@@ -33,7 +33,7 @@ function displayDestinationInfo() {
             staticIMG.attr("data-still", result.images.fixed_height_still.url);
             staticIMG.attr("data-animate", result.images.fixed_height.url);
             staticIMG.attr("data-state", "still");
-            staticIMG.attr("class", "gif");
+            staticIMG.attr("class", "gif rounded");
 
             // Appending the paragraph and staticIMG we created to the "destDiv" div we created
             destDiv.append(staticIMG)

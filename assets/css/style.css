@@ -15,7 +15,7 @@ body {
 }
 
 label {
-    background-color: white;
+    color: white;
 }
 
 #title {
@@ -23,7 +23,7 @@ label {
 }
 
 #destinations {
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .75);
 }
 
 .destination {
@@ -32,4 +32,8 @@ label {
 
 #destination-buttons {
     background-color: rgba(0, 0, 0, .6)
+}
+
+#destination-form {
+    background-color: rgba(0, 0, 0, .75);
 }

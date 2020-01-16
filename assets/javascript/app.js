@@ -11,6 +11,7 @@ function displayDestinationInfo() {
         url: queryURL,
         method: "GET"
     }).then(function(response) {
+        console.log(response);
         var results = response.data;
 
         results.forEach(function(result) {

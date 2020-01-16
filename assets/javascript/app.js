@@ -34,7 +34,7 @@ function displayDestinationInfo() {
             staticIMG.attr("data-still", result.images.fixed_height_still.url);
             staticIMG.attr("data-animate", result.images.fixed_height.url);
             staticIMG.attr("data-state", "still");
-            staticIMG.attr("class", "gif rounded");
+            staticIMG.attr("class", "gif rounded img-fluid");
 
             // Appending the paragraph and staticIMG we created to the "destDiv" div we created
             destDiv.append(staticIMG)

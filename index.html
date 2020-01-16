@@ -1,60 +1,83 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>GifLandmarks</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
-</head>
-<body>
-    
-    <div class="row justify-content-center">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="assets/css/style.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Comfortaa"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
         <div class="col-lg-10">
-            <div id="title" class="display-4 text-center rounded-top p-3 m-3">GifLandmarks</div>
+          <div id="title" class="display-4 text-center rounded-top p-3 m-3">
+            GifLandmarks
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="row justify-content-center">
+      <div class="row justify-content-center">
         <div class="col-lg-10">
-            <div id="destination-buttons" class="p-3 m-3 mt-n3 rounded-bottom text-center">
-        
-            </div> 
-
+          <div
+            id="destination-buttons"
+            class="p-3 m-3 mt-n3 rounded-bottom text-center"
+          ></div>
         </div>
-    </div>
+      </div>
 
-    <div class="row justify-content-center">
+      <div class="row justify-content-center">
         <!-- <div class="col-lg-1"></div> -->
         <div class="col-lg-6">
-            <div id="destinations" class="rounded m-3"></div>
+          <div id="destinations" class="rounded m-3"></div>
         </div>
         <div class="col-lg-4">
-            <form id="destination-form" class="p-3 m-3 form-group rounded">
-                <label for="destination-input">Add a landmark</label><br>
-                <input type="text" id="destination-input">
-        
-                <input id="addDestination" type="submit" value="submit" class="btn btn-light m-1">
-        
-            </form>
+          <form id="destination-form" class="p-3 m-3 form-group rounded">
+            <label for="destination-input">Add a landmark</label><br />
+            <input type="text" id="destination-input" />
+
+            <input
+              id="addDestination"
+              type="submit"
+              value="submit"
+              class="btn btn-light m-1"
+            />
+          </form>
         </div>
         <!-- <div class="col-lg-1"></div> -->
+      </div>
     </div>
 
-
-
-
-
-
-
-        <script
-        src="https://code.jquery.com/jquery-3.3.1.js"
-        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-        crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.js"
+      integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
     <script src="assets/javascript/app.js"></script>
-</body>
+  </body>
 </html>

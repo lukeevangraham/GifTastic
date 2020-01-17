@@ -1,107 +1,153 @@
 // Initial array of desginations
-var destinations = ["Eiffel Tower", "Big Ben", "Vatican", "Charles Bridge", "Machu Picchu", "Colosseum", "Giza Pyramid", "Leaning Tower of Pisa", "Golden Gate Bridge", "Taj Mahal", "Great Wall of China", "Sydney Opera House", "Stonehenge", "Burj Khalifa", "The Kremlin", "Berlin Wall", "Jungfrau", "Chichen Itza", "Statue of Liberty", "Hagia Sophia"]
+var destinations = [
+  "Eiffel Tower",
+  "Big Ben",
+  "Vatican",
+  "Charles Bridge",
+  "Machu Picchu",
+  "Colosseum",
+  "Giza Pyramid",
+  "Leaning Tower of Pisa",
+  "Golden Gate Bridge",
+  "Taj Mahal",
+  "Great Wall of China",
+  "Sydney Opera House",
+  "Stonehenge",
+  "Burj Khalifa",
+  "The Kremlin",
+  "Berlin Wall",
+  "Jungfrau",
+  "Chichen Itza",
+  "Statue of Liberty",
+  "Hagia Sophia"
+];
+let offset = 0;
+let lastSelectedDestination;
 
-// displayDestinationInfo function re-renders the HTML to diplay the appropriate content
-function displayDestinationInfo() {
-    var chosenDestination = $(this).attr("data-name");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + chosenDestination + "&api_key=6NPx7xPqPCxdQFVMsaIiTbtvP0EpnX8k&limit=10";
-
-    // Creating an AJAX call for the specific destination button being clicked
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function(response) {
-        console.log(response);
-        var results = response.data;
-
-        results.forEach(function(result) {
-            // Creating a div to hold the destination
-            var destDiv = $("<div class='destination p-3'>");
-
-            // Storing the rating image of gif
-            var rating = result.rating;
-            
-            // Creating a paragraph tag with the result item's rating
-            var p = $("<p>").text("Rating: " + rating);
-
-            // Creating an image tag
-            var staticIMG = $("<img>");
-
-            // Giving the image tag a src attribute of a property pulled off the result item
-            staticIMG.attr("src", result.images.fixed_height_still.url);
-
-            // Give the image tag attributes for still, animate and state
-            staticIMG.attr("data-still", result.images.fixed_height_still.url);
-            staticIMG.attr("data-animate", result.images.fixed_height.url);
-            staticIMG.attr("data-state", "still");
-            staticIMG.attr("class", "gif rounded img-fluid");
-
-            // Appending the paragraph and staticIMG we created to the "destDiv" div we created
-            destDiv.append(staticIMG)
-            destDiv.append(p);
-
-            // Prepending the destDiv to the "#destinations" div in the HTML
-            $("#destinations").prepend(destDiv);
-        })
-
-    });
+function add10() {
+  offset += 10;
+  console.log("OFFSET: ", offset);
+  displayDestinationInfo(offset);
+  // currentOffset = offset + 10;
+  // displayDestinationInfo(currentOffset)
 }
 
+// displayDestinationInfo function re-renders the HTML to diplay the appropriate content
+function displayDestinationInfo(currentOffset) {
+  var chosenDestination = $(this).attr("data-name");
 
+  if ($(this).attr("data-name") === undefined) {
+    chosenDestination = lastSelectedDestination;
+    $(".add10Button").remove()
+  } else {
+    lastSelectedDestination = $(this).attr("data-name");
+    chosenDestination = $(this).attr("data-name");
+  }
+
+  console.log("CHOSEN: ", chosenDestination);
+
+  var queryURL =
+    "https://api.giphy.com/v1/gifs/search?q=" +
+    chosenDestination +
+    "&api_key=6NPx7xPqPCxdQFVMsaIiTbtvP0EpnX8k&limit=10&offset=" +
+    currentOffset;
+
+  console.log("QUERY: ", queryURL);
+
+  // Creating an AJAX call for the specific destination button being clicked
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(response) {
+    console.log(response);
+    var results = response.data;
+
+    results.forEach(function(result) {
+      // Creating a div to hold the destination
+      var destDiv = $("<div class='destination p-3'>");
+
+      // Storing the rating image of gif
+      var rating = result.rating;
+
+      // Creating a paragraph tag with the result item's rating
+      var p = $("<p>").text("Rating: " + rating);
+
+      // Creating an image tag
+      var staticIMG = $("<img>");
+
+      // Giving the image tag a src attribute of a property pulled off the result item
+      staticIMG.attr("src", result.images.fixed_height_still.url);
+
+      // Give the image tag attributes for still, animate and state
+      staticIMG.attr("data-still", result.images.fixed_height_still.url);
+      staticIMG.attr("data-animate", result.images.fixed_height.url);
+      staticIMG.attr("data-state", "still");
+      staticIMG.attr("class", "gif rounded img-fluid");
+
+      // Appending the paragraph and staticIMG we created to the "destDiv" div we created
+      destDiv.append(staticIMG);
+      destDiv.append(p);
+
+      // Prepending the destDiv to the "#destinations" div in the HTML
+      $("#destinations").append(destDiv);
+    });
+
+    $("#destinations").append(`<button class="add10Button">Add 10 more`);
+
+    $(".add10Button").on("click", add10);
+  });
+}
 
 // Function for displaying destination data
 function renderButtons() {
+  // delete buttons prior to adding new buttons
+  $("#destination-buttons").empty();
 
-    // delete buttons prior to adding new buttons
-    $("#destination-buttons").empty();
+  // Looping through the array of destinations
+  destinations.forEach(function(destination) {
+    // var button = $('<button>' + destination + '</button>');
 
-    // Looping through the array of destinations
-    destinations.forEach(function(destination) {
-        // var button = $('<button>' + destination + '</button>');
-
-
-        // Create a beginning and ending button tag
-        var button = $('<button>');
-        // Adding a class of dest-btn to our button
-        button.addClass("dest-btn btn btn-dark m-1");
-        // Adding a data-attribute
-        button.attr("data-name", destination);
-        // Providing the initial button text
-        button.text(destination);
-        // Adding the button to the destination-button div
-        $('#destination-buttons').append(button)
-    })
+    // Create a beginning and ending button tag
+    var button = $("<button>");
+    // Adding a class of dest-btn to our button
+    button.addClass("dest-btn btn btn-dark m-1");
+    // Adding a data-attribute
+    button.attr("data-name", destination);
+    // Providing the initial button text
+    button.text(destination);
+    // Adding the button to the destination-button div
+    $("#destination-buttons").append(button);
+  });
 }
 
 // Function to switch gif state between animated and still
 function switchGifState() {
-    var state = $(this).attr("data-state");
+  var state = $(this).attr("data-state");
 
-    if (state === "still") {
-        $(this).attr("src", $(this).attr("data-animate"));
-        $(this).attr("data-state", "animate");
-    } else {
-        $(this).attr("src", $(this).attr("data-still"));
-        $(this).attr("data-state", "still");
-    }
+  if (state === "still") {
+    $(this).attr("src", $(this).attr("data-animate"));
+    $(this).attr("data-state", "animate");
+  } else {
+    $(this).attr("src", $(this).attr("data-still"));
+    $(this).attr("data-state", "still");
+  }
 }
 
 // // This .on("click") function will trigger the AJAX Call
 // $("addDestination").on("click", function(event) {
-    
-    
-    // Function to add destination into array and create button
-    function addDestination() {
-    event.preventDefault();
-    var newDestination = $("#destination-input").val();
-    destinations.push(newDestination);
-    renderButtons();
+
+// Function to add destination into array and create button
+function addDestination() {
+  event.preventDefault();
+  var newDestination = $("#destination-input").val();
+  destinations.push(newDestination);
+  renderButtons();
 }
 
 // // Grab the text from the input box
 
 // // Now construct the query URL
-// var queryURL = 
+// var queryURL =
 
 // })
 
@@ -113,7 +159,6 @@ $(document).on("click", ".gif", switchGifState);
 
 // Adding a click event listener to the "Submit" button
 $(document).on("click", "#addDestination", addDestination);
-
 
 // Calling the renderButtons fuction to display the inistial list of movies
 renderButtons();

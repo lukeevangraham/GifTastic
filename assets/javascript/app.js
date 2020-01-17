@@ -23,28 +23,29 @@ var destinations = [
 ];
 let offset = 0;
 let lastSelectedDestination;
+var appendOrHTML = "html";
 
 function add10() {
+  appendOrHTML = "append";
   offset += 10;
-  console.log("OFFSET: ", offset);
   displayDestinationInfo(offset);
-  // currentOffset = offset + 10;
-  // displayDestinationInfo(currentOffset)
 }
 
 // displayDestinationInfo function re-renders the HTML to diplay the appropriate content
 function displayDestinationInfo(currentOffset) {
-  var chosenDestination = $(this).attr("data-name");
-
-  if ($(this).attr("data-name") === undefined) {
-    chosenDestination = lastSelectedDestination;
-    $(".add10Button").remove()
-  } else {
-    lastSelectedDestination = $(this).attr("data-name");
-    chosenDestination = $(this).attr("data-name");
-  }
-
-  console.log("CHOSEN: ", chosenDestination);
+    
+    var chosenDestination = $(this).attr("data-name");
+    
+    if ($(this).attr("data-name") === undefined) {
+        chosenDestination = lastSelectedDestination;
+        $(".add10Button").remove();
+    } else {
+        appendOrHTML = "html"
+        $("#destinations").empty()
+        lastSelectedDestination = $(this).attr("data-name");
+        chosenDestination = $(this).attr("data-name");
+        $(".add10Button").remove();
+    }
 
   var queryURL =
     "https://api.giphy.com/v1/gifs/search?q=" +
@@ -52,15 +53,17 @@ function displayDestinationInfo(currentOffset) {
     "&api_key=6NPx7xPqPCxdQFVMsaIiTbtvP0EpnX8k&limit=10&offset=" +
     currentOffset;
 
-  console.log("QUERY: ", queryURL);
+    console.log(queryURL)
+    console.log(currentOffset)
 
   // Creating an AJAX call for the specific destination button being clicked
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function(response) {
-    console.log(response);
     var results = response.data;
+
+    console.log(response)
 
     results.forEach(function(result) {
       // Creating a div to hold the destination
@@ -71,6 +74,8 @@ function displayDestinationInfo(currentOffset) {
 
       // Creating a paragraph tag with the result item's rating
       var p = $("<p>").text("Rating: " + rating);
+
+        p.prepend(result.title.toUpperCase() + '<br>')
 
       // Creating an image tag
       var staticIMG = $("<img>");
@@ -89,10 +94,14 @@ function displayDestinationInfo(currentOffset) {
       destDiv.append(p);
 
       // Prepending the destDiv to the "#destinations" div in the HTML
-      $("#destinations").append(destDiv);
+    //   if (appendOrHTML === "append") {
+        $("#destinations").append(destDiv);
+    //   } else {
+        // $("#destinations").html(destDiv);
+    //   }
     });
 
-    $("#destinations").append(`<button class="add10Button">Add 10 more`);
+    $("#destinations").append(`<button class="add10Button btn btn-dark m-3">Add 10 more`);
 
     $(".add10Button").on("click", add10);
   });

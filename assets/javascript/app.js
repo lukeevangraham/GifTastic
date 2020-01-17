@@ -53,17 +53,12 @@ function displayDestinationInfo(currentOffset) {
     "&api_key=6NPx7xPqPCxdQFVMsaIiTbtvP0EpnX8k&limit=10&offset=" +
     currentOffset;
 
-    console.log(queryURL)
-    console.log(currentOffset)
-
   // Creating an AJAX call for the specific destination button being clicked
   $.ajax({
     url: queryURL,
     method: "GET"
   }).then(function(response) {
     var results = response.data;
-
-    console.log(response)
 
     results.forEach(function(result) {
       // Creating a div to hold the destination

@@ -62,6 +62,9 @@ function displayDestinationInfo(currentOffset) {
     var results = response.data;
 
     results.forEach(function(result) {
+
+      console.log(result);
+
       // Creating a div to hold the destination
       var destDiv = $("<div class='destination p-3'>");
 
@@ -69,9 +72,17 @@ function displayDestinationInfo(currentOffset) {
       var rating = result.rating;
 
       // Creating a paragraph tag with the result item's rating
-      var p = $("<p>").text("Rating: " + rating);
+      var p = $("<p class='below-img'>").text("Rating: " + rating);
 
-        p.prepend(result.title.toUpperCase() + '<br>')
+        // p.prepend(`<div class='break'></div>` +result.title.toUpperCase() + ' <a href="' + result.images.fixed_height.url + '" download><button class="btn btn-dark download-btn"><i class="fas fa-download"></i></button></a><br>')
+        p.prepend(`<div class='break'></div>` +result.title.toUpperCase() + ' <a href="./assets/images/circuit.png" download>Download</a><br>')
+        // p.prepend(`<div class='break'></div>` +result.title.toUpperCase() + ' <button onclick="window.location.href = `https://rbcommunity.org/images/team_1.jpg`" class="btn btn-dark download-btn"><i class="fas fa-download"></i></button><br>')
+        
+      //   p.prepend(`<div class='break'></div>` +result.title.toUpperCase() + ` <a href="` + result.images.fixed_height.url + `" download>
+      //   <button class="btn btn-dark download-btn"><i class="fas fa-download"></i></button>
+      // </a><br>`)
+
+      // p.prepend(`<button type="submit" onclick="window.open('` + result.images.fixed_height.url + `')">Download</button>`)
 
       // Creating an image tag
       var staticIMG = $("<img>");

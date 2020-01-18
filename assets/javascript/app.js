@@ -42,6 +42,7 @@ function displayDestinationInfo(currentOffset) {
     } else {
         appendOrHTML = "html"
         $("#destinations").empty()
+        currentOffset = 0;
         lastSelectedDestination = $(this).attr("data-name");
         chosenDestination = $(this).attr("data-name");
         $(".add10Button").remove();

@@ -34,7 +34,6 @@ function add10() {
 }
 
 function getWikipedia(chosenDest) {
-  console.log("chosenDest: ", chosenDest)
 
     $.ajax({
       url:
@@ -44,7 +43,6 @@ function getWikipedia(chosenDest) {
       method: "GET"
     }).then(wikiResponse => {
       const wikiPageNum = Object.keys(wikiResponse.query.pages)
-      console.log("wikiResponse", wikiResponse.query.pages[wikiPageNum])
       wikiData = wikiResponse.query.pages[wikiPageNum]
 
       $("#wikipedia-form").empty()

@@ -6,7 +6,7 @@ var destinations = [
   "Charles Bridge",
   "Machu Picchu",
   "Colosseum",
-  "Giza Pyramid",
+  "Giza Pyramids",
   "Leaning Tower of Pisa",
   "Golden Gate Bridge",
   "Taj Mahal",
@@ -24,6 +24,8 @@ var destinations = [
 let offset = 0;
 let lastSelectedDestination;
 var appendOrHTML = "html";
+// let giphyResult;
+let wikipediaResult;
 
 function add10() {
   appendOrHTML = "append";
@@ -31,22 +33,46 @@ function add10() {
   displayDestinationInfo(offset);
 }
 
+function getWikipedia(chosenDest) {
+  console.log("chosenDest: ", chosenDest)
+
+    $.ajax({
+      url:
+        `https://cors-anywhere.herokuapp.com/https://en.wikipedia.org/w/api.php?action=query&format=json&titles=` +
+        chosenDest +
+        `&prop=pageterms|pageprops|pageimages|pageterms|extracts`,
+      method: "GET"
+    }).then(wikiResponse => {
+      const wikiPageNum = Object.keys(wikiResponse.query.pages)
+      console.log("wikiResponse", wikiResponse.query.pages[wikiPageNum])
+      wikiData = wikiResponse.query.pages[wikiPageNum]
+
+      $("#wikipedia-form").empty()
+      $("#wikipedia-form").addClass(`myClass`)
+      $("#wikipedia-form").append(`<h5>` + wikiData.title + `</h5>`)
+      // $("#wikipedia-form").append(`<p class='description'>` + wikiData.terms.description + `</p>`)
+      let shortenedExtract = wikiData.extract
+      // console.log("HEY: ", shortenedExtract.split(`</p>`, 3))
+      $("#wikipedia-form").append(shortenedExtract.split(`</p>`, 3))
+  })
+}
+
 // displayDestinationInfo function re-renders the HTML to diplay the appropriate content
 function displayDestinationInfo(currentOffset) {
-    
-    var chosenDestination = $(this).attr("data-name");
-    
-    if ($(this).attr("data-name") === undefined) {
-        chosenDestination = lastSelectedDestination;
-        $(".add10Button").remove();
-    } else {
-        appendOrHTML = "html"
-        $("#destinations").empty()
-        currentOffset = 0;
-        lastSelectedDestination = $(this).attr("data-name");
-        chosenDestination = $(this).attr("data-name");
-        $(".add10Button").remove();
-    }
+  var chosenDestination = $(this).attr("data-name");
+
+  if ($(this).attr("data-name") === undefined) {
+    chosenDestination = lastSelectedDestination;
+    $(".add10Button").remove();
+  } else {
+    appendOrHTML = "html";
+    $("#destinations").empty();
+    currentOffset = 0;
+    lastSelectedDestination = $(this).attr("data-name");
+    chosenDestination = $(this).attr("data-name");
+    $(".add10Button").remove();
+    getWikipedia($(this).attr("data-name"))
+  }
 
   var queryURL =
     "https://api.giphy.com/v1/gifs/search?q=" +
@@ -54,7 +80,25 @@ function displayDestinationInfo(currentOffset) {
     "&api_key=6NPx7xPqPCxdQFVMsaIiTbtvP0EpnX8k&limit=10&offset=" +
     currentOffset;
 
-  // Creating an AJAX call for the specific destination button being clicked
+  // Promise.all([
+  //   $.ajax({
+  //     url: queryURL,
+  //     method: "GET"
+  //   }),
+  //   $.ajax({
+  //     url:
+  //       `https://cors-anywhere.herokuapp.com/https://en.wikipedia.org/w/api.php?action=query&format=json&titles=` +
+  //       chosenDestination +
+  //       `&prop=extracts|pageterms|pageprops|pageimages|pageterms`,
+  //     method: "GET"
+  //   })
+  // ]).then(resultArray => {
+  //   console.log("RESULT: ", resultArray)
+  //   giphyResult = resultArray[0];
+  //   wikipediaResult = resultArray[1];
+  // });
+
+  // // Creating an AJAX call for the specific destination button being clicked
   $.ajax({
     url: queryURL,
     method: "GET"
@@ -62,8 +106,6 @@ function displayDestinationInfo(currentOffset) {
     var results = response.data;
 
     results.forEach(function(result) {
-
-      console.log(result);
 
       // Creating a div to hold the destination
       var destDiv = $("<div class='destination p-3'>");
@@ -74,15 +116,13 @@ function displayDestinationInfo(currentOffset) {
       // Creating a paragraph tag with the result item's rating
       var p = $("<p class='below-img'>").text("Rating: " + rating);
 
-        // p.prepend(`<div class='break'></div>` +result.title.toUpperCase() + ' <a href="' + result.images.fixed_height.url + '" download><button class="btn btn-dark download-btn"><i class="fas fa-download"></i></button></a><br>')
-        p.prepend(`<div class='break'></div>` +result.title.toUpperCase() + ' <a href="./assets/images/circuit.png" download>Download</a><br>')
-        // p.prepend(`<div class='break'></div>` +result.title.toUpperCase() + ' <button onclick="window.location.href = `https://rbcommunity.org/images/team_1.jpg`" class="btn btn-dark download-btn"><i class="fas fa-download"></i></button><br>')
-        
-      //   p.prepend(`<div class='break'></div>` +result.title.toUpperCase() + ` <a href="` + result.images.fixed_height.url + `" download>
-      //   <button class="btn btn-dark download-btn"><i class="fas fa-download"></i></button>
-      // </a><br>`)
-
-      // p.prepend(`<button type="submit" onclick="window.open('` + result.images.fixed_height.url + `')">Download</button>`)
+      p.prepend(
+        `<div class='break'></div>` +
+          result.title.toUpperCase() +
+          ` <a href="#" onclick="download_img(this, '` +
+          result.images.fixed_height.url +
+          `')"><button class="btn btn-dark download-btn"><i class="fas fa-download"></i></button></a><br>`
+      );
 
       // Creating an image tag
       var staticIMG = $("<img>");
@@ -101,14 +141,16 @@ function displayDestinationInfo(currentOffset) {
       destDiv.append(p);
 
       // Prepending the destDiv to the "#destinations" div in the HTML
-    //   if (appendOrHTML === "append") {
-        $("#destinations").append(destDiv);
-    //   } else {
-        // $("#destinations").html(destDiv);
-    //   }
+      //   if (appendOrHTML === "append") {
+      $("#destinations").append(destDiv);
+      //   } else {
+      // $("#destinations").html(destDiv);
+      //   }
     });
 
-    $("#destinations").append(`<button class="add10Button btn btn-dark m-3">Add 10 more`);
+    $("#destinations").append(
+      `<button class="add10Button btn btn-dark m-3">Add 10 more`
+    );
 
     $(".add10Button").on("click", add10);
   });
@@ -158,6 +200,36 @@ function addDestination() {
   var newDestination = $("#destination-input").val();
   destinations.push(newDestination);
   renderButtons();
+}
+
+function download_img(e, link) {
+  console.log("LINK: ", link);
+
+  var image = new Image();
+  image.crossOrigin = "anonymous";
+  image.src = link;
+  image.onload = function() {
+    var canvas = document.createElement("canvas");
+    canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+    canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+    canvas.getContext("2d").drawImage(this, 0, 0);
+    var blob;
+    // ... get as Data URI
+    if (image.src.indexOf(".jpg") > -1) {
+      blob = canvas.toDataURL("image/jpeg");
+    } else if (image.src.indexOf(".png") > -1) {
+      blob = canvas.toDataURL("image/png");
+    } else if (image.src.indexOf(".gif") > -1) {
+      blob = canvas.toDataURL("image/gif");
+    } else {
+      blob = canvas.toDataURL("image/png");
+    }
+    tempbtn = document.createElement("a");
+    tempbtn.href = blob;
+    tempbtn.download = "image.gif"; // or define your own name.
+    tempbtn.click();
+    tempbtn.remove();
+  };
 }
 
 // // Grab the text from the input box

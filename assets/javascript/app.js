@@ -24,8 +24,8 @@ var destinations = [
 let offset = 0;
 let lastSelectedDestination;
 var appendOrHTML = "html";
-// let giphyResult;
 let wikipediaResult;
+let favorites
 
 function add10() {
   appendOrHTML = "append";

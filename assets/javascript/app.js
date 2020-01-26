@@ -26,6 +26,7 @@ let lastSelectedDestination;
 var appendOrHTML = "html";
 let wikipediaResult;
 let favorites;
+let firstFavorite = false;
 
 function add10() {
   appendOrHTML = "append";
@@ -36,6 +37,10 @@ function add10() {
 function favoriteClick(gifFaved) {
   console.log("FAVE: ", gifFaved);
   $("#favorites").addClass(`p-3`)
+if (firstFavorite === false) {
+  $("#favorites").append(`<h5 class='col-12 p-0'>Favorites:</h5>`)
+  firstFavorite = true;
+}
   $("#favorites").append(`<div class="col-4 p-0"><img src="` + gifFaved + `" alt="" class="img-fluid"></div>`)
 }
 
@@ -51,7 +56,7 @@ function getWikipedia(chosenDest) {
     wikiData = wikiResponse.query.pages[wikiPageNum];
 
     $("#wikipedia-form").empty();
-    $("#wikipedia-form").addClass(`myClass`);
+    $("#wikipedia-form").addClass(`myClass p-3 `);
     $("#wikipedia-form").append(`<h5>` + wikiData.title + `</h5>`);
     let shortenedExtract = wikiData.extract;
     $("#wikipedia-form").append(shortenedExtract.split(`</p>`, 3));

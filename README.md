@@ -5,6 +5,8 @@ Deployed at: https://lukeevangraham.github.io/GifTastic/
 
 With this app, I used the GIPHY API to make a dynamic web page that populates with travel-based gifs.
 
+![Venice](./readmeImages/venice.png "Venice")
+
 ## Using the app
 
 Near the top of the screen the app generates buttons (from an array of strings).
